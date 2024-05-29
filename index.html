@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path Drawing API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            margin-top: 20px;
+            max-width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Path Drawing API Test</h1>
+        <div id="result">
+            <h3>Route:</h3>
+            <pre id="route"></pre>
+            <h3>Image:</h3>
+            <img id="image" alt="Path Image" />
+        </div>
+    </div>
+
+    <script>
+        // Define origin and destination coordinates
+        const originLat = 37.7749;
+        const originLng = -122.4194;
+        const destLat = 34.0522;
+        const destLng = -118.2437;
+
+        // Construct the API URL
+        const apiUrl = `https://mapapi-9sk37el9b-abdullah-ibrahims-projects-e3d6d782.vercel.app/path?originLat=${originLat}&originLng=${originLng}&destLat=${destLat}&destLng=${destLng}`;
+
+        // Fetch data from the API
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Display route
+                document.getElementById('route').textContent = JSON.stringify(data.route, null, 2);
+
+                // Display image
+                document.getElementById('image').src = data.image;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('route').textContent = 'Error fetching data.';
+            });
+    </script>
+</body>
+</html>
